@@ -1,0 +1,168 @@
+// openSUSE "Pixel Perfect" Wallpaper for E17
+// Author: George Koutsikos (ragecryx@yahoo.gr)
+// License: Creative Commons Attribution-ShareAlike Greece 3.0
+
+// Images to be included in the final EDJ file
+images {
+	image: "logo.png" COMP;
+	image: "block.png" COMP;
+	image: "title.png" COMP;
+}
+
+// Sets of colours - using official openSUSE palette
+color_classes {
+	color_class {
+		name: "oSGreen";
+		color: 143 207 6 255;
+	}
+}
+
+// Actual background description
+collections {
+	group{
+		name: "e/desktop/background";
+		min: 800 600;
+		max: 1920 1080;
+
+		parts {
+			// Rectangle for background color.
+			part {
+				name: "background";
+				type: RECT;
+				mouse_events: 0;
+				description {
+					state: "default" 0.0;
+					color_class: "oSGreen";
+				}
+			}
+
+			// The tiling blocks/pixels of the background
+			part {
+				name: "blocks";
+				type: IMAGE;
+				clip_to: "blockMask";
+				description {
+					state: "default" 0.0;
+					image.normal: "block.png";
+					aspect: 1.0 1.0;
+					step: 2 2;
+					fixed: 1 1;
+					fill.size.relative: 0 0;
+					fill.size.offset: 12 12;
+					min: SOURCE;
+					max: SOURCE;
+				}
+			}
+
+			// MASK of the blocks
+			part {
+				name: "blockMask";
+				type: RECT;
+				description {
+					state: "default" 0.0;
+					rel1.relative: 0.0 -1.0;
+					rel2.relative: 1.0 -1.1;
+				}
+				description {
+					state: "default" 0.1;
+					inherit: "default" 0.0;
+					rel1.relative: 0.0 2.9;
+					rel2.relative: 1.0 3.0;
+				}
+			}
+
+			// The openSUSE logo at the center of the wallpaper
+			part {
+				name: "oSLogo";
+				type: IMAGE;
+				description {
+					state: "default" 0.0;
+					image.normal: "logo.png";
+					min: 32 32;
+					max: 128 128;
+				} 
+			}
+		
+			// The "Pixel Perfect" title.
+			part {
+				name: "PixPrf";
+				type: IMAGE;
+				description {
+					state: "default";
+					image.normal: "title.png";
+					color: 0 0 0 0;
+				}
+				description {
+					state: "on" 0.0;
+					image.normal: "title.png";
+					color: 255 255 255 255;
+					max: 324 132;
+					fixed: 1 1;
+					step: 2 2;
+					aspect: 1.0 1.0;
+					rel1.to: "oSLogo";
+					rel1.offset: -150 5;
+				}
+				description {
+					state: "off" 0.0;
+					image.normal: "title.png";
+					color: 255 255 255 0;
+					max: 324 132;
+					fixed: 1 1;
+					step: 2 2;
+					aspect: 1.0 1.0;
+					rel1.to: "oSLogo";
+					rel1.offset: -150 5;
+				}
+			}
+		} // Parts ends here
+		
+		// Pieces of code handling transitions
+		programs {
+			program {
+				name: "Start";
+				signal: "load";
+				source: "";
+				after: "Slide";
+			}
+			
+			program {
+				name: "Slide";
+				transition: LINEAR 10.0;
+				in: 5.0 5.0;
+				action: STATE_SET "default" 0.1;
+				target: "blockMask";
+				after: "Reset";
+				after: "HideTXT";
+			}
+
+			program {
+				name: "ShowTXT";
+				transition: SIN 1.8;
+				in: 2.8 5.0;
+				action: STATE_SET "on" 0.0;
+				target: "PixPrf";
+				after: "HideTXT";
+			}
+
+			program {
+				name: "HideTXT";
+				transition: SIN 1.8;
+				in: 2.8 5.0;
+				action: STATE_SET "off" 0.0;
+				target: "PixPrf";
+				after: "ShowTXT";
+			}
+
+			program {
+				name: "Reset";
+				in: 5.0 5.0;
+				action: STATE_SET "default" 0.0;
+				target: "blockMask";
+				after: "Slide";
+			}
+		} // Programs ends here
+	} // Group ends here
+} // Collections ends here
+
+
