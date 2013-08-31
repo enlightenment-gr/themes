@@ -1,0 +1,149 @@
+// "The Paper" Wallpaper for E17
+// Author: George Koutsikos (ragecryx@yahoo.gr)
+// License: Creative Commons Attribution-ShareAlike Greece 3.0
+
+// Images to be included in the final EDJ file
+images {
+	image: "paper_bg0.png" COMP;
+	image: "paper_bg1.png" COMP;
+	image: "paper_bg2.png" COMP;
+    image: "paper_bg3.png" COMP;
+    image: "title.png" COMP;
+}
+
+// Sets of colours
+color_classes {
+	color_class {
+		name: "PaperTint";
+		color: 0 0 0 205;
+	}
+}
+
+// Actual background description
+collections {
+	group{
+		name: "e/desktop/background";
+		min: 800 600;
+		max: 1920 1080;
+
+		parts {
+
+			// The tiling paper texture
+			part {
+				name: "paper_texture";
+				type: IMAGE;
+				description {
+					state: "default" 0.0;
+					image.normal: "paper_bg0.png";
+					aspect: 1.0 1.0;
+					fill.size.relative: 0 0;
+					fill.size.offset: 440 440;
+					min: SOURCE;
+					max: SOURCE;
+				}
+
+				description {
+					state: "default" 0.4;
+					image.normal: "paper_bg1.png";
+					aspect: 1.0 1.0;
+					fill.size.relative: 0 0;
+					fill.size.offset: 440 440;
+					min: SOURCE;
+					max: SOURCE;
+				}
+
+				description {
+					state: "default" 0.6;
+					image.normal: "paper_bg2.png";
+					aspect: 1.0 1.0;
+					fill.size.relative: 0 0;
+					fill.size.offset: 440 440;
+					min: SOURCE;
+					max: SOURCE;
+				}
+
+				description {
+					state: "default" 1.0;
+					image.normal: "paper_bg3.png";
+					aspect: 1.0 1.0;
+					fill.size.relative: 0 0;
+					fill.size.offset: 440 440;
+					min: SOURCE;
+					max: SOURCE;
+				}
+			}
+
+			// Rectangle for tinting
+			part {
+				name: "tinting";
+				type: RECT;
+				mouse_events: 0;
+				description {
+					state: "default" 0.0;
+					color_class: "PaperTint";
+				}
+			}
+
+			part {
+				name: "paper_title";
+				type: IMAGE;
+				description {
+					state: "default" 0.0;
+					image.normal: "title.png";
+					aspect: 1.0 1.0;
+					max: 600 450;
+
+				}
+			}
+		} // Parts ends here
+
+		programs {
+			program {
+				name: "Start";
+				signal: "load";
+				source: "";
+				after: "Paper0";
+			}
+
+			program {
+				name: "Paper0";
+				transition: LINEAR 0.4;
+				in: 0.6 0.0;
+				action: STATE_SET "default" 0.0;
+				target: "paper_texture";
+				after: "Paper1";
+			}
+
+			program {
+				name: "Paper1";
+				transition: LINEAR 0.4;
+				in: 0.6 0.0;
+				action: STATE_SET "default" 0.4;
+				target: "paper_texture";
+				after: "Paper2";
+			}
+
+			program {
+				name: "Paper2";
+				transition: LINEAR 0.4;
+				in: 0.6 0.0;
+				action: STATE_SET "default" 0.6;
+				target: "paper_texture";
+				after: "Paper3";
+			}
+
+			program {
+				name: "Paper3";
+				transition: LINEAR 0.4;
+				in: 0.6 0.0;
+				action: STATE_SET "default" 1.0;
+				target: "paper_texture";
+				after: "Paper1";
+			}
+
+		}// Programs ends here
+
+	} // Group ends here
+
+} // Collections ends here
+

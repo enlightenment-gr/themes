@@ -1,4 +1,4 @@
-themes
+Themes and Wallpapers
 ======
 
 Enlightenment Themes and Wallpapers
