@@ -9,28 +9,30 @@ BUILDDIR := .
 E_DESTDIR := $(shell $(PKG_CONFIG) --variable=prefix enlightenment)/share/enlightenment/data/backgrounds
 E_HOMEDIR := ~/.e/e/backgrounds
 
+THEME_NAME := ose17_pixel_perfect
+
 .PHONY: all clean install install-system install-home
 
-all: $(BUILDDIR)/ose17_pixel_perfect.edj
+all: $(BUILDDIR)/$(THEME_NAME).edj
 
 clean:
-	rm -f $(BUILDDIR)/ose17_pixel_perfect.edj
+	rm -f $(BUILDDIR)/$(THEME_NAME).edj
 
 
-$(BUILDDIR)/ose17_pixel_perfect.edj: Makefile
+$(BUILDDIR)/$(THEME_NAME).edj: Makefile
 	$(EDJE_CC) \
-		$(SRCDIR)/ose17_pixel_perfect.edc \
-		$(BUILDDIR)/ose17_pixel_perfect.edj
+		$(SRCDIR)/$(THEME_NAME).edc \
+		$(BUILDDIR)/$(THEME_NAME).edj
 
 install:
 	@echo "Choose install-system or install-home"
 
-install-system: $(BUILDDIR)/ose17_pixel_perfect.edj
+install-system: $(BUILDDIR)/$(THEME_NAME).edj
 	$(INSTALL) -D  -C -m 0644 -o root -g root \
-		$(BUILDDIR)/ose17_pixel_perfect.edj \
-		$(E_DESTDIR)/ose17_pixel_perfect.edj
+		$(BUILDDIR)/$(THEME_NAME).edj \
+		$(E_DESTDIR)/$(THEME_NAME).edj
 
-install-home: $(BUILDDIR)/ose17_pixel_perfect.edj
+install-home: $(BUILDDIR)/$(THEME_NAME).edj
 	$(INSTALL) -D  -C -m 0644 \
-		$(BUILDDIR)/ose17_pixel_perfect.edj \
-		$(E_HOMEDIR)/ose17_pixel_perfect.edj
+		$(BUILDDIR)/$(THEME_NAME).edj \
+		$(E_HOMEDIR)/$(THEME_NAME).edj

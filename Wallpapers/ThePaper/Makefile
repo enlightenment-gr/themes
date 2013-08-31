@@ -9,28 +9,30 @@ BUILDDIR := .
 E_DESTDIR := $(shell $(PKG_CONFIG) --variable=prefix enlightenment)/share/enlightenment/data/backgrounds
 E_HOMEDIR := ~/.e/e/backgrounds
 
+THEME_NAME := the_paper_wp
+
 .PHONY: all clean install install-system install-home
 
-all: $(BUILDDIR)/the_paper_wp.edj
+all: $(BUILDDIR)/$(THEME_NAME).edj
 
 clean:
-	rm -f $(BUILDDIR)/the_paper_wp.edj
+	rm -f $(BUILDDIR)/$(THEME_NAME).edj
 
 
-$(BUILDDIR)/the_paper_wp.edj: Makefile
+$(BUILDDIR)/$(THEME_NAME).edj: Makefile
 	$(EDJE_CC) \
-		$(SRCDIR)/the_paper_wp.edc \
-		$(BUILDDIR)/the_paper_wp.edj
+		$(SRCDIR)/$(THEME_NAME).edc \
+		$(BUILDDIR)/$(THEME_NAME).edj
 
 install:
 	@echo "Choose install-system or install-home"
 
-install-system: $(BUILDDIR)/the_paper_wp.edj
+install-system: $(BUILDDIR)/$(THEME_NAME).edj
 	$(INSTALL) -D  -C -m 0644 -o root -g root \
-		$(BUILDDIR)/the_paper_wp.edj \
-		$(E_DESTDIR)/the_paper_wp.edj
+		$(BUILDDIR)/$(THEME_NAME).edj \
+		$(E_DESTDIR)/$(THEME_NAME).edj
 
-install-home: $(BUILDDIR)/the_paper_wp.edj
+install-home: $(BUILDDIR)/$(THEME_NAME).edj
 	$(INSTALL) -D  -C -m 0644 \
-		$(BUILDDIR)/the_paper_wp.edj \
-		$(E_HOMEDIR)/the_paper_wp.edj
+		$(BUILDDIR)/$(THEME_NAME).edj \
+		$(E_HOMEDIR)/$(THEME_NAME).edj
